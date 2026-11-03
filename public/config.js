@@ -1,0 +1,1 @@
+window.BOI_CONFIG={};

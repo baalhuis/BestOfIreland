@@ -217,17 +217,7 @@ const fitIRL=(anim)=>{const o=mqPhone.matches?{paddingTopLeft:[10,10],paddingBot
 fitIRL(false);document.getElementById('fit').onclick=()=>fitIRL(true);
 map.on('popupopen',e=>{if(!mqPhone.matches)return;const y=map.latLngToContainerPoint(e.popup.getLatLng()).y;const lim=map.getSize().y-sheet.offsetHeight-16;if(y>lim)map.panBy([0,y-lim],{animate:true})});
 
-// ---- export / import van vinkjes (om ze naar een ander apparaat te verhuizen)
 const toast=m=>{const d=document.createElement('div');d.className='toast';d.textContent=m;document.body.appendChild(d);setTimeout(()=>d.remove(),2600)};
-document.getElementById('exp').onclick=()=>{
-  const blob=new Blob([JSON.stringify({app:'best-of-ireland',v:1,marks:MARKS},null,1)],{type:'application/json'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='best-of-ireland-vinkjes.json';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);
-};
-const imp=document.getElementById('impfile');
-document.getElementById('imp').onclick=()=>imp.click();
-imp.onchange=async()=>{const f=imp.files[0];if(!f)return;try{const j=JSON.parse(await f.text());const m=j.marks||j;let n=0;
-  for(const [k,v] of Object.entries(m)){if(v&&(v.v||v.w)){MARKS[k]={v:!!v.v,w:!!v.w};n++}}
-  localSave();refreshMarks();toast(n+' vinkjes geïmporteerd')}catch(e){toast('Dit bestand kon niet gelezen worden')}imp.value=''};
 // ---- mijn locatie
 const Locate=L.Control.extend({options:{position:'topleft'},onAdd(){
   const c=L.DomUtil.create('div','leaflet-bar leaflet-control leaflet-control-locate');
