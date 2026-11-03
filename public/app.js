@@ -197,9 +197,10 @@ function setSheet(state,px){
 }
 function nearest(h){const s=snaps();return Object.entries(s).sort((a,b)=>Math.abs(a[1]-h)-Math.abs(b[1]-h))[0][0]}
 let drag=null;
-function dStart(e){if(!mqPhone.matches||e.target.closest('input,button,a'))return;drag={y:e.clientY,h:sheet.offsetHeight,moved:false};sheet.classList.add('dragging');e.currentTarget.setPointerCapture&&e.currentTarget.setPointerCapture(e.pointerId)}
-function dMove(e){if(!drag)return;const dy=drag.y-e.clientY;if(Math.abs(dy)>4)drag.moved=true;const s=snaps();setSheet(null,Math.min(s.full,Math.max(90,drag.h+dy)))}
-function dEnd(){if(!drag)return;sheet.classList.remove('dragging');const order=['peek','half','full'];
+function dStart(e){if(!mqPhone.matches||e.target.closest('input,button,a'))return;drag={y:e.clientY,h:sheet.offsetHeight,moved:false,s:snaps(),raf:0,ny:e.clientY};sheet.classList.add('dragging');e.currentTarget.setPointerCapture&&e.currentTarget.setPointerCapture(e.pointerId)}
+function dMove(e){if(!drag)return;drag.ny=e.clientY;if(Math.abs(drag.y-e.clientY)>4)drag.moved=true;if(drag.raf)return;
+  drag.raf=requestAnimationFrame(()=>{if(!drag)return;drag.raf=0;const h=Math.min(drag.s.full,Math.max(90,drag.h+drag.y-drag.ny));sheet.style.height=Math.round(h)+'px'})}
+function dEnd(){if(!drag)return;if(drag.raf)cancelAnimationFrame(drag.raf);sheet.classList.remove('dragging');const order=['peek','half','full'];
   if(!drag.moved)setSheet(order[(order.indexOf(sheetState)+1)%3]);else setSheet(nearest(sheet.offsetHeight));drag=null}
 [grab,sheet.querySelector('.brand')].forEach(el=>{el.addEventListener('pointerdown',dStart);el.addEventListener('pointermove',dMove);el.addEventListener('pointerup',dEnd);el.addEventListener('pointercancel',dEnd)});
 grab.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();const o=['peek','half','full'];setSheet(o[(o.indexOf(sheetState)+1)%3])}});
@@ -210,13 +211,17 @@ function filterCount(){const n=ORDER.length-active.size+(SF!=='all'?1:0);ftog.in
 ftog.addEventListener('click',()=>{const o=!filtersEl.classList.contains('open');filtersEl.classList.toggle('open',o);ftog.setAttribute('aria-expanded',o);if(o&&sheetState!=='full')setSheet('full');else setSheet(sheetState)});
 q.addEventListener('focus',()=>{if(mqPhone.matches&&sheetState==='peek')setSheet('half')});
 // iPhone: na het sluiten van het toetsenbord blijft de pagina soms verschoven staan; terugzetten
-const kbFix=()=>{if(document.activeElement&&document.activeElement.matches('input,textarea'))return;if(scrollX||scrollY)scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0;setSheet(sheetState);map.invalidateSize()};
+const kbFix=()=>{if(document.activeElement&&document.activeElement.matches('input,textarea'))return;if(scrollX||scrollY)scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0;syncH();setSheet(sheetState);map.invalidateSize()};
 q.addEventListener('blur',()=>{setTimeout(kbFix,60);setTimeout(kbFix,350)});
 q.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();q.blur()}});
 if(window.visualViewport)visualViewport.addEventListener('resize',()=>{setTimeout(kbFix,60)});
 addEventListener('scroll',()=>{if(!(document.activeElement&&document.activeElement.matches('input,textarea'))&&(scrollY||scrollX))scrollTo(0,0)},{passive:true});
 mqPhone.addEventListener('change',()=>{setSheet(sheetState);map.invalidateSize()});
-addEventListener('resize',()=>{if(mqPhone.matches)setSheet(sheetState)});
+// hoogte volgen van wat Safari echt laat zien (verandert met werkbalk en toetsenbord)
+function syncH(){const r=document.documentElement;if(!mqPhone.matches){r.style.removeProperty('--appH');return}if(document.activeElement&&document.activeElement.matches('input,textarea'))return;const h=Math.round(innerHeight);if(r.style.getPropertyValue('--appH')!==h+'px'){r.style.setProperty('--appH',h+'px');map.invalidateSize()}}
+addEventListener('resize',()=>{syncH();if(mqPhone.matches)setSheet(sheetState)});
+addEventListener('orientationchange',()=>setTimeout(()=>{syncH();setSheet(sheetState)},300));
+syncH();
 const _af=applyFilter;applyFilter=function(){_af();filterCount()};
 setSheet('half');filterCount();
 const fitIRL=(anim)=>{const o=mqPhone.matches?{paddingTopLeft:[10,10],paddingBottomRight:[10,sheet.offsetHeight+10]}:{padding:[10,10]};anim?map.flyToBounds(IRL,{...o,duration:.6}):map.fitBounds(IRL,o)};

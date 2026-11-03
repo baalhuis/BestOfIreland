@@ -1,5 +1,5 @@
-const V='boi-2026-11-03-10';
-const SHELL=['/','/index.html','/style.css?v=2026-11-03-10','/app.js?v=2026-11-03-10','/data/places.js?v=2026-11-03-10','/auth.js?v=2026-11-03-10','/vendor/supabase.js','/vendor/leaflet.js','/vendor/leaflet.markercluster.js','/vendor/leaflet.css','/vendor/MarkerCluster.css','/manifest.webmanifest','/icons/icon-192.png'];
+const V='boi-2026-11-03-11';
+const SHELL=['/','/index.html','/style.css?v=2026-11-03-11','/app.js?v=2026-11-03-11','/data/places.js?v=2026-11-03-11','/auth.js?v=2026-11-03-11','/vendor/supabase.js','/vendor/leaflet.js','/vendor/leaflet.markercluster.js','/vendor/leaflet.css','/vendor/MarkerCluster.css','/manifest.webmanifest','/icons/icon-192.png'];
 const TILES='boi-tiles';const MAX_TILES=1500;
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==V&&k!==TILES).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
