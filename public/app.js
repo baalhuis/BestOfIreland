@@ -209,6 +209,12 @@ list.addEventListener('touchmove',e=>{if(lt!=null&&mqPhone.matches&&e.touches[0]
 function filterCount(){const n=ORDER.length-active.size+(SF!=='all'?1:0);ftog.innerHTML=n?`Filters <b>${n}</b>`:'Filters'}
 ftog.addEventListener('click',()=>{const o=!filtersEl.classList.contains('open');filtersEl.classList.toggle('open',o);ftog.setAttribute('aria-expanded',o);if(o&&sheetState!=='full')setSheet('full');else setSheet(sheetState)});
 q.addEventListener('focus',()=>{if(mqPhone.matches&&sheetState==='peek')setSheet('half')});
+// iPhone: na het sluiten van het toetsenbord blijft de pagina soms verschoven staan; terugzetten
+const kbFix=()=>{if(document.activeElement&&document.activeElement.matches('input,textarea'))return;if(scrollX||scrollY)scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0;setSheet(sheetState);map.invalidateSize()};
+q.addEventListener('blur',()=>{setTimeout(kbFix,60);setTimeout(kbFix,350)});
+q.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();q.blur()}});
+if(window.visualViewport)visualViewport.addEventListener('resize',()=>{setTimeout(kbFix,60)});
+addEventListener('scroll',()=>{if(!(document.activeElement&&document.activeElement.matches('input,textarea'))&&(scrollY||scrollX))scrollTo(0,0)},{passive:true});
 mqPhone.addEventListener('change',()=>{setSheet(sheetState);map.invalidateSize()});
 addEventListener('resize',()=>{if(mqPhone.matches)setSheet(sheetState)});
 const _af=applyFilter;applyFilter=function(){_af();filterCount()};
