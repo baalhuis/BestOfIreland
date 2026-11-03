@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Best of Ireland Kaart</title>
+<meta name="description" content="Alle plekken uit de Best of Ireland-directory op een interactieve kaart, met categorieën, adressen, websites en vinkjes voor bezocht en wil ik heen.">
+<meta name="theme-color" content="#1d3461">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Ireland">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500;700;800&family=Alegreya+Sans:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="/vendor/leaflet.css">
+<link rel="stylesheet" href="/vendor/MarkerCluster.css">
+<link rel="stylesheet" href="/style.css?v=2026-11-03-1">
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="head">
+      <div class="brand">
+        <h1><span>Directory · p. 212–217</span>Best of Ireland</h1>
+        <div class="count" id="count"></div>
+      </div>
+      <input id="q" type="search" placeholder="Zoek op naam of plaats" aria-label="Zoek op naam of plaats" autocomplete="off">
+      <div class="seg" id="seg" role="group" aria-label="Filter op status"></div>
+      <div class="chips" id="chips"></div>
+      <div class="tools"><button id="all" type="button">Alles aan</button><button id="none" type="button">Alles uit</button><button id="fit" type="button">Heel Ierland</button><span class="io"><button id="exp" type="button">Vinkjes exporteren</button><button id="imp" type="button">Importeren</button><input id="impfile" type="file" accept="application/json,.json" hidden></span><span class="sync" id="sync"></span></div>
+    </div>
+    <div id="list" tabindex="-1"></div>
+  </aside>
+  <div id="map" role="region" aria-label="Kaart van Ierland"></div>
+</div>
+
+
+<script src="/vendor/leaflet.js"></script>
+<script src="/vendor/leaflet.markercluster.js"></script>
+<script src="/data/places.js?v=2026-11-03-1"></script>
+<script src="/app.js?v=2026-11-03-1"></script>
+</body>
+</html>
