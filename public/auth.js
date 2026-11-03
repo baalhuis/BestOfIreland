@@ -9,7 +9,7 @@
     syncEl.textContent='Vinkjes worden op dit apparaat bewaard';
     return;
   }
-  const sb=window.supabase.createClient(CFG.url,CFG.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false,storageKey:'boi-auth'}});
+  const sb=window.supabase.createClient(CFG.url,CFG.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storageKey:'boi-auth'}});
   // Vinkjes uit de vorige (lokale) versie: worden bij de eerste keer inloggen meegenomen.
   const LEGACY={...MARKS};
   let user=null, pending=null;
@@ -28,6 +28,7 @@
       <input id="lg-email" type="email" autocomplete="email" inputmode="email" placeholder="naam@voorbeeld.nl" required>
       <button type="submit" class="lg-go" id="lg-send">Stuur inlogcode</button>
       <p class="lg-note">Je krijgt een mail met een code van 6 cijfers. Geen wachtwoord nodig.</p>
+      <p class="lg-note" id="lg-have" hidden><button type="button" class="lg-link" id="lg-havebtn">Ik heb al een code</button></p>
     </div>
     <div class="lg-step lg-2" hidden>
       <label for="lg-code">Code uit de mail naar <b id="lg-to"></b></label>
@@ -43,17 +44,37 @@
   const step=n=>{$('.lg-1').hidden=n!==1;$('.lg-2').hidden=n!==2;$('#lg-err').textContent='';(n===1?$('#lg-email'):$('#lg-code')).focus()};
   const err=m=>{$('#lg-err').textContent=m};
   const busy=(b,el)=>{el.disabled=b;el.dataset.t=el.dataset.t||el.textContent;el.textContent=b?'Even geduld…':el.dataset.t};
-  function openLogin(p){pending=p||null;dlg.showModal?dlg.showModal():dlg.setAttribute('open','');step(1)}
+  // Laatst verstuurde code onthouden, zodat wegklikken of herladen niet betekent dat je opnieuw moet aanvragen.
+  const SENT_KEY='boi-otp-sent',WAIT=60e3,VALID=60*60e3;
+  let sent=null;try{sent=JSON.parse(sessionStorage.getItem(SENT_KEY)||'null')}catch(e){}
+  const sentFresh=()=>sent&&Date.now()-sent.t<VALID;
+  function markSent(email){sent={email,t:Date.now()};try{sessionStorage.setItem(SENT_KEY,JSON.stringify(sent))}catch(e){}}
+  let tick=null;
+  function cooldown(){
+    const b=$('#lg-resend');clearInterval(tick);
+    const upd=()=>{const left=sent?Math.ceil((sent.t+WAIT-Date.now())/1e3):0;
+      if(left>0){b.disabled=true;b.textContent='Nieuwe code over '+left+' s'}else{b.disabled=false;b.textContent='Code opnieuw sturen';clearInterval(tick)}};
+    upd();tick=setInterval(upd,1000);
+  }
+  function toCode(email,note){$('#lg-email').value=email;$('#lg-to').textContent=email;step(2);if(note)$('#lg-err').textContent=note;cooldown()}
+  function openLogin(p){pending=p||null;dlg.showModal?dlg.showModal():dlg.setAttribute('open','');
+    if(sentFresh())toCode(sent.email);else{step(1)}
+    $('#lg-have').hidden=!sentFresh();}
   $('.lg-x').onclick=()=>{pending=null;dlg.close()};
   dlg.addEventListener('click',e=>{if(e.target===dlg){pending=null;dlg.close()}});
   async function sendCode(){
     const email=$('#lg-email').value.trim();
     if(!/^\S+@\S+\.\S+$/.test(email)){err('Vul een geldig e-mailadres in.');return}
     const b=$('#lg-send');busy(true,b);
-    const {error}=await sb.auth.signInWithOtp({email,options:{shouldCreateUser:true}});
+    if(sent&&sent.email===email&&Date.now()-sent.t<WAIT){busy(false,b);toCode(email,'Er is net al een code naar dit adres gestuurd. Vul die hieronder in.');return}
+    const {error}=await sb.auth.signInWithOtp({email,options:{shouldCreateUser:true,emailRedirectTo:location.origin+'/'}});
     busy(false,b);
-    if(error){err(error.status===429?'Er zijn net te veel codes verstuurd. Probeer het over een paar minuten opnieuw.':'De code kon niet verstuurd worden: '+error.message);return}
-    $('#lg-to').textContent=email;step(2);
+    if(error){
+      if(error.status===429){
+        if(sent&&sent.email===email){toCode(email,'Er is net al een code gestuurd. Vul die in, of vraag over een minuut een nieuwe aan.');return}
+        err('Er zijn net te veel codes verstuurd. Probeer het over een minuut opnieuw.');return}
+      err('De code kon niet verstuurd worden: '+error.message);return}
+    markSent(email);toCode(email,'');
   }
   async function verify(){
     const email=$('#lg-email').value.trim(),token=$('#lg-code').value.replace(/\D/g,'');
@@ -62,10 +83,12 @@
     const {error}=await sb.auth.verifyOtp({email,token,type:'email'});
     busy(false,b);
     if(error){err('Deze code klopt niet of is verlopen. Vraag een nieuwe code aan.');return}
+    try{sessionStorage.removeItem(SENT_KEY)}catch(e){}sent=null;
     dlg.close();
   }
   dlg.querySelector('form').addEventListener('submit',e=>{e.preventDefault();$('.lg-1').hidden?verify():sendCode()});
-  $('#lg-back').onclick=()=>step(1);
+  $('#lg-back').onclick=()=>{step(1);$('#lg-have').hidden=!sentFresh()};
+  $('#lg-havebtn').onclick=()=>toCode(sent.email);
   $('#lg-resend').onclick=sendCode;
 
   // ---------- account-knop
