@@ -188,13 +188,7 @@ renderSeg();renderChips();applyFilter();
 const sheet=document.getElementById('sheet'),grab=document.getElementById('grab'),appEl=document.querySelector('.app'),ftog=document.getElementById('ftoggle'),filtersEl=document.getElementById('filters');
 const mqPhone=matchMedia('(max-width:760px)');
 let sheetState='half';
-// Deel van het scherm achter de werkbalk van Safari (of de thuisbalk): daar loopt het paneel wel door, maar telt niet mee als zichtbaar.
-const sabProbe=document.createElement('div');sabProbe.style.cssText='position:fixed;left:0;bottom:0;width:0;height:env(safe-area-inset-bottom,0px);visibility:hidden;pointer-events:none';document.body.appendChild(sabProbe);
-let COV=0;
-function measureCov(){if(document.activeElement&&document.activeElement.matches('input,textarea'))return COV;
-  const vv=window.visualViewport;const vis=vv?vv.height+vv.offsetTop:innerHeight;
-  COV=Math.round(Math.max(sabProbe.offsetHeight,Math.min(260,appEl.clientHeight-vis)));sheet.style.setProperty('--cov',COV+'px');return COV}
-const snaps=()=>{const c=measureCov();const H=appEl.clientHeight-c;const head=sheet.querySelector('.head').offsetHeight+22;return {peek:Math.min(Math.max(head,120),H*.45)+c,half:Math.round(H*.52)+c,full:H-48+c}};
+const snaps=()=>{const H=appEl.clientHeight;const head=sheet.querySelector('.head').offsetHeight+22;return {peek:Math.min(Math.max(head,120),H*.45),half:Math.round(H*.52),full:H-48}};
 function setSheet(state,px){
   if(!mqPhone.matches){sheet.style.height='';appEl.style.removeProperty('--sheetpx');return}
   const s=snaps();const h=Math.round(px!=null?px:s[state]);
