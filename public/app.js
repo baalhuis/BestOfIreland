@@ -212,15 +212,21 @@ ftog.addEventListener('click',()=>{const o=!filtersEl.classList.contains('open')
 q.addEventListener('focus',()=>{if(mqPhone.matches&&sheetState==='peek')setSheet('half')});
 // iPhone: na het sluiten van het toetsenbord blijft de pagina soms verschoven staan; terugzetten
 const kbFix=()=>{if(document.activeElement&&document.activeElement.matches('input,textarea'))return;if(scrollX||scrollY)scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0;syncH();setSheet(sheetState);map.invalidateSize()};
-q.addEventListener('blur',()=>{setTimeout(kbFix,60);setTimeout(kbFix,350)});
+q.addEventListener('blur',()=>{[60,350,800,1500].forEach(t=>setTimeout(kbFix,t))});
 q.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();q.blur()}});
 if(window.visualViewport)visualViewport.addEventListener('resize',()=>{setTimeout(kbFix,60)});
 addEventListener('scroll',()=>{if(!(document.activeElement&&document.activeElement.matches('input,textarea'))&&(scrollY||scrollX))scrollTo(0,0)},{passive:true});
 mqPhone.addEventListener('change',()=>{setSheet(sheetState);map.invalidateSize()});
 // hoogte volgen van wat Safari echt laat zien (verandert met werkbalk en toetsenbord)
-function syncH(){const r=document.documentElement;if(!mqPhone.matches){r.style.removeProperty('--appH');return}if(document.activeElement&&document.activeElement.matches('input,textarea'))return;const h=Math.round(innerHeight);if(r.style.getPropertyValue('--appH')!==h+'px'){r.style.setProperty('--appH',h+'px');map.invalidateSize()}}
+let maxH=0,retry=0;
+function syncH(){const r=document.documentElement;if(!mqPhone.matches){r.style.removeProperty('--appH');return}
+  if(document.activeElement&&document.activeElement.matches('input,textarea'))return;
+  const h=Math.round(innerHeight);maxH=Math.max(maxH,h);
+  // veel kleiner dan normaal = toetsenbord nog aan het sluiten: even later opnieuw meten
+  if(h<maxH-150){if(retry<12){retry++;setTimeout(()=>{syncH();setSheet(sheetState)},150)}return}
+  retry=0;if(r.style.getPropertyValue('--appH')!==h+'px'){r.style.setProperty('--appH',h+'px');map.invalidateSize();setSheet(sheetState)}}
 addEventListener('resize',()=>{syncH();if(mqPhone.matches)setSheet(sheetState)});
-addEventListener('orientationchange',()=>setTimeout(()=>{syncH();setSheet(sheetState)},300));
+addEventListener('orientationchange',()=>{maxH=0;setTimeout(()=>{syncH();setSheet(sheetState)},300)});
 syncH();
 const _af=applyFilter;applyFilter=function(){_af();filterCount()};
 setSheet('half');filterCount();
