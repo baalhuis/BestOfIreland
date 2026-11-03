@@ -144,9 +144,9 @@ h1 span{display:block;font-family:var(--sans);font-weight:500;font-size:12px;let
 .searchrow{display:flex;gap:8px}
 .searchrow #q{flex:1;min-width:0}
 @media (max-width:760px){
-  .app{display:block;position:relative}
+  .app{display:block;position:relative;height:100vh;height:100lvh}
   #map{position:absolute;inset:0}
-  aside{position:absolute;left:0;right:0;bottom:0;height:50%;z-index:1100;border-right:0;border-radius:16px 16px 0 0;box-shadow:0 -6px 24px rgba(0,0,0,.2);padding-right:max(16px,env(safe-area-inset-right,0px));padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box;transition:height .25s ease;will-change:height}
+  aside{position:absolute;left:0;right:0;bottom:0;height:50%;z-index:1100;border-right:0;border-radius:16px 16px 0 0;box-shadow:0 -6px 24px rgba(0,0,0,.2);padding-right:max(16px,env(safe-area-inset-right,0px));box-sizing:border-box;transition:height .25s ease;will-change:height}
   aside.dragging{transition:none}
   .grab{display:flex;justify-content:center;align-items:center;height:22px;margin:0 0 0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));width:calc(100% + max(16px,env(safe-area-inset-left,0px)) + max(16px,env(safe-area-inset-right,0px)));cursor:grab;touch-action:none;flex:none}
   .grab span{width:40px;height:5px;border-radius:3px;background:var(--muted);opacity:.45}
@@ -161,7 +161,7 @@ h1 span{display:block;font-family:var(--sans);font-weight:500;font-size:12px;let
   .filters.open{display:flex}
   .seg{flex-wrap:nowrap;overflow-x:auto;align-self:stretch}
   .chips{flex-wrap:wrap}
-  #list{padding-bottom:calc(24px + env(safe-area-inset-bottom,0px))}
+  #list{padding-bottom:calc(24px + var(--cov,0px))}
   .leaflet-bottom{bottom:var(--sheetpx,50%)}
   .leaflet-control-scale{margin-bottom:6px!important}
 }
