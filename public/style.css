@@ -174,6 +174,12 @@ h1 span{display:block;font-family:var(--sans);font-weight:500;font-size:12px;let
   .filters{display:none}
   .filters.open{display:flex}
   .seg{flex-wrap:nowrap;overflow-x:auto;align-self:stretch}
+  .seg button{flex:1 1 auto;padding:8px 6px;text-align:center}
+  #list{padding-right:0}
+  .tools{gap:2px 6px}
+  .tools button{padding:8px 6px;margin:-4px 0}
+  .tools button:first-child{margin-left:-6px}
+  .leaflet-container a.leaflet-popup-close-button{width:34px;height:34px;font-size:24px;line-height:32px;top:2px;right:2px}
   .chips{flex-wrap:wrap}
   #list{padding-bottom:calc(24px + env(safe-area-inset-bottom,0px))}
   .leaflet-bottom{bottom:var(--sheetpx,50%)}

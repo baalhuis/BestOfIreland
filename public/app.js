@@ -139,7 +139,7 @@ let SF='all';try{SF=localStorage.getItem('boi-sf')||'all'}catch(e){}
 const seg=document.getElementById('seg');
 function renderSeg(){
   const nw=PLACES.filter(p=>mk(p).w).length,nv=PLACES.filter(p=>mk(p).v).length;
-  const opts=[['all','Alle'],['w',`Wil ik heen <small>${nw}</small>`],['v',`Bezocht <small>${nv}</small>`],['nv','Nog niet bezocht']];
+  const opts=[['all','Alle'],['w',`Wil ik heen <small>${nw}</small>`],['v',`Bezocht <small>${nv}</small>`],['nv','Niet bezocht']];
   seg.innerHTML=opts.map(([k,l])=>`<button type="button" id="sf-${k}" data-sf="${k}" aria-pressed="${SF===k}">${l}</button>`).join('');
 }
 seg.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;SF=b.dataset.sf;try{localStorage.setItem('boi-sf',SF)}catch(_){}renderSeg();applyFilter()});
