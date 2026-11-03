@@ -94,6 +94,8 @@
   // ---------- account-knop
   const topEl=document.getElementById('account-top');
   function renderAccount(){
+    // testhaak: ?testacc toont de knop zoals bij een ingelogde gebruiker met een lang adres (verandert niets aan inloggen)
+    if(/[?&]testacc\b/.test(location.search)&&topEl){topEl.hidden=false;topEl.className='acc-top in';topEl.textContent='voorbeeld.naam@example.com';return}
     if(topEl){topEl.hidden=false;topEl.className='acc-top'+(user?' in':'');topEl.textContent=user?(user.email||'Ingelogd'):'Inloggen';topEl.title=user?'Ingelogd als '+(user.email||''):'Inloggen om vinkjes te bewaren';
       topEl.onclick=()=>{if(!user)openLogin();else{const f=document.getElementById('filters'),t=document.getElementById('ftoggle');if(f&&!f.classList.contains('open')&&t&&getComputedStyle(t).display!=='none')t.click();document.getElementById('account').scrollIntoView({block:'nearest'})}}}
     accEl.innerHTML=user
