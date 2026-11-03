@@ -536,7 +536,8 @@
   "la": 52.8544,
   "lo": -9.40131,
   "a": "Main Street, Miltown Malbay",
-  "x": 1
+  "x": 1,
+  "fb": "https://www.facebook.com/frielspub"
  },
  {
   "n": "Armada Hotel",
@@ -547,7 +548,8 @@
   "la": 52.84521,
   "lo": -9.4367,
   "a": "R482, Spanish Point",
-  "x": 1
+  "x": 1,
+  "w": "https://www.armadahotel.com"
  },
  {
   "n": "Ballymaloe Festival of Food",
@@ -1016,7 +1018,9 @@
   "la": 51.63381,
   "lo": -8.70632,
   "a": "Courtmacsherry",
-  "x": 1
+  "x": 1,
+  "ig": "https://www.instagram.com/the_lifeboat_inn_courtmacsherry/",
+  "fb": "https://www.facebook.com/thelifeboatinncourtmacsherry"
  },
  {
   "n": "O'Sullivans Bar",
@@ -1200,7 +1204,8 @@
   "lo": -8.52189,
   "a": "43 Main Street, Kinsale",
   "x": 1,
-  "fb": "https://www.facebook.com/p/Prims-Bookshop-Bibliotherapy-100039382825147/"
+  "fb": "https://www.facebook.com/p/Prims-Bookshop-Bibliotherapy-100039382825147/",
+  "ig": "https://www.instagram.com/primsbookshop/"
  },
  {
   "n": "Saint Francis Provisions",
@@ -1360,7 +1365,8 @@
   "t": "Macosquin",
   "k": "stay",
   "la": 55.098,
-  "lo": -6.7
+  "lo": -6.7,
+  "w": "https://www.thebothans.co.uk"
  },
  {
   "n": "Errigal",
@@ -1472,7 +1478,8 @@
   "t": "Ballyshannon",
   "k": "fest",
   "la": 54.502,
-  "lo": -8.189
+  "lo": -8.189,
+  "w": "https://www.rorygallagherfestival.com/"
  },
  {
   "n": "Biddy's O'Barnes",
@@ -1648,7 +1655,9 @@
   "la": 54.47278,
   "lo": -5.69026,
   "a": "1 Comber Road, Killinchy, Newtownards BT23 6PA",
-  "x": 1
+  "x": 1,
+  "w": "https://www.balloohouse.com",
+  "fb": "https://www.facebook.com/pages/Balloo-House/118696064851341"
  },
  {
   "n": "Birch Cabins",
@@ -2108,7 +2117,8 @@
   "la": 53.34215,
   "lo": -6.26265,
   "a": "South William Street, Dublin",
-  "x": 1
+  "x": 1,
+  "w": "https://clementandpekoe.com/"
  },
  {
   "n": "Cloud Picker Coffee",
@@ -2355,7 +2365,10 @@
   "la": 53.3394,
   "lo": -6.2617,
   "a": "St Stephen's Green West, Dublin",
-  "x": 1
+  "x": 1,
+  "w": "https://www.fitzwilliamhoteldublin.com/",
+  "ig": "https://www.instagram.com/fitzwilliamhotel/",
+  "fb": "https://www.facebook.com/FitzwilliamDublin/"
  },
  {
   "n": "Forest Avenue Restaurant",
@@ -2494,7 +2507,10 @@
   "t": "Dublin City",
   "k": "brew",
   "la": 53.339,
-  "lo": -6.258
+  "lo": -6.258,
+  "w": "https://theshelbourne.com/the-horseshoe-bar/",
+  "ig": "https://www.instagram.com/theshelbournedublin/",
+  "fb": "https://www.facebook.com/theshelbournedublin/"
  },
  {
   "n": "Hawksmoor",
@@ -3055,7 +3071,8 @@
   "t": "Dublin City",
   "k": "bar",
   "la": 53.35074,
-  "lo": -6.27215
+  "lo": -6.27215,
+  "w": "https://bereenbrothers.com/row"
  },
  {
   "n": "Rugby and Football at the Aviva Stadium",
@@ -3078,7 +3095,8 @@
   "la": 53.3482,
   "lo": -6.29346,
   "a": "28 Parkgate Street, Dublin",
-  "x": 1
+  "x": 1,
+  "fb": "https://www.facebook.com/RyansParkgatebyF.X.Buckley/"
  },
  {
   "n": "Sandyford House",
@@ -3160,7 +3178,8 @@
   "la": 53.35224,
   "lo": -6.28462,
   "a": "56 Manor Place, Stoneybatter, Dublin",
-  "x": 1
+  "x": 1,
+  "fb": "https://www.facebook.com/sliceD7"
  },
  {
   "n": "Southbank",
@@ -3192,7 +3211,8 @@
   "t": "Dublin City",
   "k": "shop",
   "la": 53.371,
-  "lo": -6.186
+  "lo": -6.186,
+  "fb": "https://www.facebook.com/RedStablesMarket"
  },
  {
   "n": "St Stephen's Green",
@@ -3539,7 +3559,9 @@
   "t": "Enniskillen",
   "k": "pub",
   "la": 54.34503,
-  "lo": -7.64194
+  "lo": -7.64194,
+  "w": "https://www.charliesbarenniskillen.co.uk",
+  "ig": "https://www.instagram.com/charliesbarenniskillen/"
  },
  {
   "n": "FOLK",
@@ -3655,7 +3677,8 @@
   "t": "Clifden",
   "k": "stay",
   "la": 53.489,
-  "lo": -10.02
+  "lo": -10.02,
+  "w": "https://www.fernwood.eco/stay"
  },
  {
   "n": "Ballynahinch Castle",
@@ -3685,7 +3708,9 @@
   "t": "Galway City",
   "k": "cafe",
   "la": 53.2737,
-  "lo": -9.05428
+  "lo": -9.05428,
+  "w": "https://www.ardbia.com/",
+  "fb": "https://www.facebook.com/ardbia"
  },
  {
   "n": "Bierhaus",
@@ -3777,7 +3802,8 @@
   "t": "Galway City",
   "k": "bake",
   "la": 53.274,
-  "lo": -9.05704
+  "lo": -9.05704,
+  "ig": "https://www.instagram.com/magpiebakerygalway/"
  },
  {
   "n": "McSwiggans",
@@ -3799,7 +3825,8 @@
   "la": 53.27459,
   "lo": -9.04832,
   "a": "8 Eyre Square, Galway",
-  "x": 1
+  "x": 1,
+  "w": "https://oconnellsgalway.ie/"
  },
  {
   "n": "Sheridans Wine Bar",
@@ -3888,7 +3915,8 @@
   "t": "Kilcolgan",
   "k": "sea",
   "la": 53.21146,
-  "lo": -8.87267
+  "lo": -8.87267,
+  "w": "https://www.moransoystercottage.com/"
  },
  {
   "n": "DK Connemara Oysters",
@@ -3897,7 +3925,10 @@
   "t": "Letterfrack",
   "k": "sea",
   "la": 53.553,
-  "lo": -9.95
+  "lo": -9.95,
+  "w": "https://dkconnemaraoysters.com/",
+  "ig": "https://www.instagram.com/dkconnemaraoysters/",
+  "fb": "https://www.facebook.com/dkconnemaraoystersltd/"
  },
  {
   "n": "Keane's Bar",
@@ -4115,7 +4146,8 @@
   "la": 52.14224,
   "lo": -10.26908,
   "a": "Main Street, Dingle",
-  "x": 1
+  "x": 1,
+  "fb": "https://www.facebook.com/pages/Currans-Pub/155497427842181"
  },
  {
   "n": "Dick Mack's",
@@ -4149,7 +4181,10 @@
   "t": "Dingle",
   "k": "fest",
   "la": 52.14203,
-  "lo": -10.26771
+  "lo": -10.26771,
+  "w": "https://www.dinglefood.com/",
+  "ig": "https://www.instagram.com/dinglefoodfest/",
+  "fb": "https://www.facebook.com/DingleFood"
  },
  {
   "n": "The Fish Box",
@@ -4309,7 +4344,8 @@
   "la": 51.76549,
   "lo": -9.77082,
   "a": "Lauragh",
-  "x": 1
+  "x": 1,
+  "w": "https://ansibinkenmare.com/"
  },
  {
   "n": "Helen's Bar",
@@ -4670,7 +4706,8 @@
   "t": "Adare",
   "k": "shop",
   "la": 52.56519,
-  "lo": -8.79214
+  "lo": -8.79214,
+  "w": "https://aoifemcnamara.com/"
  },
  {
   "n": "Desmond Castle",
@@ -4690,7 +4727,8 @@
   "t": "Caherconlish",
   "k": "pub",
   "la": 52.595,
-  "lo": -8.47
+  "lo": -8.47,
+  "fb": "https://www.facebook.com/PaMcGraths-183709184977590/"
  },
  {
   "n": "Jerry Flannery's Bar",
@@ -4711,7 +4749,8 @@
   "t": "Limerick City",
   "k": "pub",
   "la": 52.66556,
-  "lo": -8.62981
+  "lo": -8.62981,
+  "w": "https://www.jjbowlespub.com/"
  },
  {
   "n": "The Hunt Museum",
@@ -4746,7 +4785,8 @@
   "la": 52.65987,
   "lo": -8.63009,
   "a": "Mallow Street, Limerick",
-  "x": 1
+  "x": 1,
+  "fb": "https://www.facebook.com/riftcoffe/"
  },
  {
   "n": "Tom Collins' Bar",
@@ -5032,7 +5072,8 @@
   "la": 53.79406,
   "lo": -9.56099,
   "a": "Westport Harbour",
-  "x": 1
+  "x": 1,
+  "w": "https://croninssheebeen.com/"
  },
  {
   "n": "Matt Molloy's",
@@ -5105,7 +5146,8 @@
   "t": "Ashbourne",
   "k": "pub",
   "la": 53.511,
-  "lo": -6.397
+  "lo": -6.397,
+  "w": "https://www.swansbar.ie/"
  },
  {
   "n": "Newgrange",
@@ -5116,7 +5158,8 @@
   "la": 53.6947,
   "lo": -6.47555,
   "a": "Brú na Bóinne",
-  "x": 1
+  "x": 1,
+  "w": "https://heritageireland.ie/places-to-visit/bru-na-boinne-visitor-centre-newgrange-and-knowth"
  },
  {
   "n": "Brady's",
@@ -5193,7 +5236,10 @@
   "la": 53.09534,
   "lo": -7.91476,
   "a": "Castle Street, Birr",
-  "x": 1
+  "x": 1,
+  "w": "https://birrcastle.com",
+  "ig": "https://www.instagram.com/birrcastledemesne/",
+  "fb": "https://www.facebook.com/birrcastledemesne/"
  },
  {
   "n": "Tullamore D.E.W. Distillery",
@@ -5285,7 +5331,8 @@
   "t": "Knappagh Beg",
   "k": "pub",
   "la": 54.2715,
-  "lo": -8.4745
+  "lo": -8.4745,
+  "w": "https://www.hargadons.com"
  },
  {
   "n": "Michael J. Ward",
@@ -5303,7 +5350,8 @@
   "t": "Rosses Point",
   "k": "sea",
   "la": 54.305,
-  "lo": -8.565
+  "lo": -8.565,
+  "w": "https://www.fishandbean.ie"
  },
  {
   "n": "Melvyn's",
@@ -5323,7 +5371,8 @@
   "la": 54.27059,
   "lo": -8.47338,
   "a": "Grattan Street, Sligo",
-  "x": 1
+  "x": 1,
+  "fb": "https://www.facebook.com/pages/Shoot-The-Crows/109571759060804"
  },
  {
   "n": "Sligo Oyster Experience",
@@ -5332,7 +5381,8 @@
   "t": "Sligo Town",
   "k": "sea",
   "la": 54.27424,
-  "lo": -8.47574
+  "lo": -8.47574,
+  "w": "https://sligooysterexperience.ie/"
  },
  {
   "n": "Thomas Connolly",
@@ -5363,7 +5413,8 @@
   "t": "Templeboy",
   "k": "pub",
   "la": 54.27,
-  "lo": -8.76
+  "lo": -8.76,
+  "w": "https://www.thebeachbarsligo.com"
  },
  {
   "n": "Galtymore via the Black Road",
@@ -5401,7 +5452,8 @@
   "la": 52.80765,
   "lo": -8.43626,
   "a": "Main Street, Ballina (Tipperary)",
-  "x": 1
+  "x": 1,
+  "fb": "https://www.facebook.com/Liam-ORiains"
  },
  {
   "n": "Cashel Palace",
@@ -5597,7 +5649,8 @@
   "lo": -7.93052,
   "a": "Main Street, Lismore",
   "x": 1,
-  "fb": "https://www.facebook.com/p/Farmgate-Lismore-100028020627021/"
+  "fb": "https://www.facebook.com/p/Farmgate-Lismore-100028020627021/",
+  "ig": "https://www.instagram.com/farmgatelismore/"
  },
  {
   "n": "All Together Now",
@@ -5825,7 +5878,8 @@
   "la": 52.95764,
   "lo": -6.35329,
   "a": "Glenmalure",
-  "x": 1
+  "x": 1,
+  "w": "https://www.glenmalurelodge.ie"
  },
  {
   "n": "Grangecon Kitchen",
@@ -5836,7 +5890,8 @@
   "la": 52.99779,
   "lo": -6.74339,
   "a": "Grangecon",
-  "x": 1
+  "x": 1,
+  "fb": "https://www.facebook.com/GrangeconKitchen"
  },
  {
   "n": "Greystones",
