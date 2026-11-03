@@ -21,16 +21,19 @@
 </head>
 <body>
 <div class="app">
-  <aside>
+  <aside id="sheet">
+    <div class="grab" id="grab" role="button" tabindex="0" aria-label="Lijst groter of kleiner maken"><span></span></div>
     <div class="head">
       <div class="brand">
         <h1><span>Directory · p. 212–217</span>Best of Ireland</h1>
         <div class="count" id="count"></div>
       </div>
-      <input id="q" type="search" placeholder="Zoek op naam of plaats" aria-label="Zoek op naam of plaats" autocomplete="off">
+      <div class="searchrow"><input id="q" type="search" placeholder="Zoek op naam of plaats" aria-label="Zoek op naam of plaats" autocomplete="off"><button id="ftoggle" type="button" aria-expanded="false" aria-controls="filters">Filters</button></div>
+      <div class="filters" id="filters">
       <div class="seg" id="seg" role="group" aria-label="Filter op status"></div>
       <div class="chips" id="chips"></div>
       <div class="tools"><button id="all" type="button">Alles aan</button><button id="none" type="button">Alles uit</button><button id="fit" type="button">Heel Ierland</button><span class="io"><button id="exp" type="button">Vinkjes exporteren</button><button id="imp" type="button">Importeren</button><input id="impfile" type="file" accept="application/json,.json" hidden></span><span class="sync" id="sync"></span></div>
+      </div>
     </div>
     <div id="list" tabindex="-1"></div>
   </aside>

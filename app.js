@@ -30,7 +30,7 @@ const gmaps=p=>'https://www.google.com/maps/search/?api=1&query='+encodeURICompo
 const gsearch=(p,x)=>'https://www.google.com/search?q='+encodeURIComponent(x+'"'+p.n+'" '+(p.t||'')+' '+p.c+' Ireland');
 
 const TILE_MODE=true;
-const map=L.map('map',{zoomSnap:.5,zoomDelta:1,wheelPxPerZoomLevel:35,wheelDebounceTime:20,minZoom:6,maxZoom:TILE_MODE?19:15,maxBounds:[[50.6,-12.5],[56.3,-3.8]],attributionControl:true});
+const map=L.map('map',{zoomSnap:.5,zoomDelta:1,wheelPxPerZoomLevel:35,wheelDebounceTime:20,minZoom:5,maxZoom:TILE_MODE?19:15,maxBounds:[[45.5,-15],[58.5,-1.5]],attributionControl:true});
 L.control.scale({imperial:false}).addTo(map);
 const zoomLayers=[];
 const atZoom=(z,layer)=>zoomLayers.push([z,layer]);
@@ -169,7 +169,12 @@ function renderList(){
 }
 function focusPlace(id){
   const p=PLACES[id];
-  cluster.zoomToShowLayer(p.m,()=>{map.panTo(p.m.getLatLng());p.m.openPopup()});
+  const phone=window.matchMedia('(max-width:760px)').matches;
+  if(phone&&typeof setSheet==='function')setSheet('peek');
+  cluster.zoomToShowLayer(p.m,()=>{
+    const ll=p.m.getLatLng();
+    if(phone){const off=(document.getElementById('sheet').offsetHeight)/2;const pt=map.project(ll).add([0,off-60]);map.panTo(map.unproject(pt))}else map.panTo(ll);
+    p.m.openPopup()});
 }
 list.addEventListener('click',e=>{if(e.target.closest('a,.mk'))return;const it=e.target.closest('.item');if(it)focusPlace(+it.dataset.id)});
 list.addEventListener('keydown',e=>{const it=e.target.closest('.item');if(it&&(e.key==='Enter'||e.key===' ')){e.preventDefault();focusPlace(+it.dataset.id)}});
@@ -178,6 +183,39 @@ list.addEventListener('mouseleave',()=>document.querySelectorAll('.pin.hot').for
 map.on('moveend',renderList);
 
 renderSeg();renderChips();applyFilter();
+
+// ---- telefoon: lijst als schuifpaneel over de kaart
+const sheet=document.getElementById('sheet'),grab=document.getElementById('grab'),appEl=document.querySelector('.app'),ftog=document.getElementById('ftoggle'),filtersEl=document.getElementById('filters');
+const mqPhone=matchMedia('(max-width:760px)');
+let sheetState='half';
+const snaps=()=>{const H=appEl.clientHeight;const head=sheet.querySelector('.head').offsetHeight+22;return {peek:Math.min(Math.max(head,120),H*.45),half:Math.round(H*.52),full:H-48}};
+function setSheet(state,px){
+  if(!mqPhone.matches){sheet.style.height='';appEl.style.removeProperty('--sheetpx');return}
+  const s=snaps();const h=Math.round(px!=null?px:s[state]);
+  sheet.style.height=h+'px';appEl.style.setProperty('--sheetpx',h+'px');
+  if(state)sheetState=state;
+}
+function nearest(h){const s=snaps();return Object.entries(s).sort((a,b)=>Math.abs(a[1]-h)-Math.abs(b[1]-h))[0][0]}
+let drag=null;
+function dStart(e){if(!mqPhone.matches||e.target.closest('input,button,a'))return;drag={y:e.clientY,h:sheet.offsetHeight,moved:false};sheet.classList.add('dragging');e.currentTarget.setPointerCapture&&e.currentTarget.setPointerCapture(e.pointerId)}
+function dMove(e){if(!drag)return;const dy=drag.y-e.clientY;if(Math.abs(dy)>4)drag.moved=true;const s=snaps();setSheet(null,Math.min(s.full,Math.max(90,drag.h+dy)))}
+function dEnd(){if(!drag)return;sheet.classList.remove('dragging');const order=['peek','half','full'];
+  if(!drag.moved)setSheet(order[(order.indexOf(sheetState)+1)%3]);else setSheet(nearest(sheet.offsetHeight));drag=null}
+[grab,sheet.querySelector('.brand')].forEach(el=>{el.addEventListener('pointerdown',dStart);el.addEventListener('pointermove',dMove);el.addEventListener('pointerup',dEnd);el.addEventListener('pointercancel',dEnd)});
+grab.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();const o=['peek','half','full'];setSheet(o[(o.indexOf(sheetState)+1)%3])}});
+// lijst helemaal omhoog geveegd en dan naar beneden trekken: paneel kleiner
+let lt=null;list.addEventListener('touchstart',e=>{lt=list.scrollTop<=0?e.touches[0].clientY:null},{passive:true});
+list.addEventListener('touchmove',e=>{if(lt!=null&&mqPhone.matches&&e.touches[0].clientY-lt>60&&sheetState!=='peek'){setSheet(sheetState==='full'?'half':'peek');lt=null}},{passive:true});
+function filterCount(){const n=ORDER.length-active.size+(SF!=='all'?1:0);ftog.innerHTML=n?`Filters <b>${n}</b>`:'Filters'}
+ftog.addEventListener('click',()=>{const o=!filtersEl.classList.contains('open');filtersEl.classList.toggle('open',o);ftog.setAttribute('aria-expanded',o);if(o&&sheetState!=='full')setSheet('full');else setSheet(sheetState)});
+q.addEventListener('focus',()=>{if(mqPhone.matches&&sheetState==='peek')setSheet('half')});
+mqPhone.addEventListener('change',()=>{setSheet(sheetState);map.invalidateSize()});
+addEventListener('resize',()=>{if(mqPhone.matches)setSheet(sheetState)});
+const _af=applyFilter;applyFilter=function(){_af();filterCount()};
+setSheet('half');filterCount();
+const fitIRL=(anim)=>{const o=mqPhone.matches?{paddingTopLeft:[10,10],paddingBottomRight:[10,sheet.offsetHeight+10]}:{padding:[10,10]};anim?map.flyToBounds(IRL,{...o,duration:.6}):map.fitBounds(IRL,o)};
+fitIRL(false);document.getElementById('fit').onclick=()=>fitIRL(true);
+map.on('popupopen',e=>{if(!mqPhone.matches)return;const y=map.latLngToContainerPoint(e.popup.getLatLng()).y;const lim=map.getSize().y-sheet.offsetHeight-16;if(y>lim)map.panBy([0,y-lim],{animate:true})});
 
 // ---- export / import van vinkjes (om ze naar een ander apparaat te verhuizen)
 const toast=m=>{const d=document.createElement('div');d.className='toast';d.textContent=m;document.body.appendChild(d);setTimeout(()=>d.remove(),2600)};
