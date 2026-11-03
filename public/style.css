@@ -166,6 +166,7 @@ h1 span{display:block;font-family:var(--sans);font-weight:500;font-size:12px;let
   .leaflet-control-scale{margin-bottom:6px!important}
 }
 @media (prefers-reduced-motion:reduce){.pin{transition:none}}
+.closed{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:4px;background:#b3261e;color:#fff;font:600 10px/1.5 var(--sans);letter-spacing:.06em;text-transform:uppercase;vertical-align:middle}
 
 .tools .io{display:inline-flex;gap:12px}
 .leaflet-control-locate a{display:grid!important;place-items:center}

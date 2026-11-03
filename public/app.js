@@ -90,7 +90,7 @@ const markBtns=(p,cls)=>{const s=mk(p);return `<button type="button" class="mk $
 function popup(p){
   const k=CATS[p.k];
   const web=p.w?`<a href="${p.w}" target="_blank" rel="noopener">Website</a>`:p.fb?`<a href="${p.fb}" target="_blank" rel="noopener">Facebook</a>`:`<a href="${gsearch(p,'')}" target="_blank" rel="noopener">Zoek website</a>`;
-  return `<div class="pp" style="--c:${k.c}"><h3>${esc(p.n)}</h3><div class="meta"><b>${k.l}</b> · ${esc(place(p))} · p. ${p.p}</div><div class="addr">${p.x?esc(p.a):'Locatie bij benadering (plaatsniveau)'}</div>
+  return `<div class="pp" style="--c:${k.c}"><h3>${esc(p.n)}${p.dicht?'<span class="closed">Gesloten</span>':''}</h3><div class="meta"><b>${k.l}</b> · ${esc(place(p))} · p. ${p.p}</div><div class="addr">${p.x?esc(p.a):'Locatie bij benadering (plaatsniveau)'}</div>
   <div class="marks">${markBtns(p,'big')}</div>
   <div class="links"><a class="primary" href="${gmaps(p)}" target="_blank" rel="noopener">Google Maps</a>${web}${p.ig?`<a href="${p.ig}" target="_blank" rel="noopener">Instagram</a>`:`<a href="${gsearch(p,'instagram ')}" target="_blank" rel="noopener">Zoek Instagram</a>`}</div></div>`;
 }
@@ -162,7 +162,7 @@ function renderList(){
   for(const p of vis){
     if(p.c!==lc){h+=`<div class="county">Co. ${esc(p.c)}</div>`;lc=p.c;lt=null}
     if(p.t!==lt){if(p.t)h+=`<div class="town">${esc(p.t)}</div>`;lt=p.t}
-    h+=`<div class="item" tabindex="0" data-id="${p.id}" style="--c:${CATS[p.k].c}"><span class="dot">${CATS[p.k].i}</span><span class="nm">${esc(p.n)}<em>${p.x&&p.a?esc(p.a):CATS[p.k].l} · p. ${p.p}</em></span><span class="acts">${markBtns(p,'sm')}<a class="mapl" href="${gmaps(p)}" target="_blank" rel="noopener" title="Open in Google Maps" aria-label="Open in Google Maps">${ICO.m}</a></span></div>`;
+    h+=`<div class="item" tabindex="0" data-id="${p.id}" style="--c:${CATS[p.k].c}"><span class="dot">${CATS[p.k].i}</span><span class="nm">${esc(p.n)}<em>${p.dicht?'Gesloten · ':''}${p.x&&p.a?esc(p.a):CATS[p.k].l} · p. ${p.p}</em></span><span class="acts">${markBtns(p,'sm')}<a class="mapl" href="${gmaps(p)}" target="_blank" rel="noopener" title="Open in Google Maps" aria-label="Open in Google Maps">${ICO.m}</a></span></div>`;
   }
   h+=`<p class="note">Wisselende locatie (niet op de kaart): Fleadh Cheoil na hÉireann (p. 145) en Irish Open (p. 146). Plekken met een adres staan op hun exacte locatie. De overige pins staan op plaatsniveau; de Google Maps-link zoekt daar de exacte plek. Kies rechtsboven je kaartondergrond.</p>`;
   list.innerHTML=h;
